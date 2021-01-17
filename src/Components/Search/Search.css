@@ -1,0 +1,8 @@
+.search-movie {
+    cursor: pointer;
+}
+
+.movie-filter {
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,5 @@
+.mainContainer {
+    min-height: calc(100vh - 64px - 185.39px);
+    max-width: 1280px;
+    margin: 15px auto;
+}

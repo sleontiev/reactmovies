@@ -1,0 +1,23 @@
+.card-movie {
+    margin: 25px 10px;
+    width: 250px;
+}
+
+.btn-movie {
+    display: block;
+    margin: 0 auto !important;
+    text-align: center;
+    width: 100px;
+    background: none;
+    color: #212121 !important;
+    border: 1px solid #212121;
+    border-radius: 40px;
+    padding: 5px 15px;
+    transition: .3s !important;
+}
+
+.btn-movie:hover {
+    background: #212121;
+    color: #c2c2c2 !important;
+    transition: .3s !important;
+}
