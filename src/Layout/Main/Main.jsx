@@ -4,6 +4,8 @@ import { Preloader } from "../../Components/Preloader/Preloader";
 import { Search } from "../../Components/Search/Search";
 import "./Main.css";
 
+const API_KEY = process.env.REACT_APP_APIKEY
+
 const Main = () => {
 
   const [movies, setMovies] = useState([]);
@@ -17,7 +19,7 @@ const Main = () => {
   const searchMovie = (movieName, movieType) => {
     setLoading(true);
     fetch(
-      `http://www.omdbapi.com/?apikey=8d1cc66c&s=${movieName}${
+      `http://www.omdbapi.com/?apikey=${API_KEY}&s=${movieName}${
         movieType !== "all" ? `&type=${movieType}` : ""
       }`
     )
@@ -29,7 +31,7 @@ const Main = () => {
   };
 
   useEffect(() => {
-    fetch(`http://www.omdbapi.com/?apikey=8d1cc66c&s=Avengers`)
+    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=Avengers`)
       .then(response => response.json())
       .then(post => {
         setMovies(post.Search);
