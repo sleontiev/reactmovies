@@ -8,16 +8,7 @@ const Main = () => {
 
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // componentDidMount() {
-  //   fetch(`http://www.omdbapi.com/?apikey=8d1cc66c&s=Avengers`)
-  //     .then((response) => response.json())
-  //     .then(post => this.setState({
-  //         movies: post.Search,
-  //         loading: false,
-  //     }))
-  // }
-
+  
   const changeBg = (id) => {
     const fillArr = movies.filter((item) => item.imdbID === id);
     document.body.style.backgroundImage = `url(${fillArr[0].Poster})`;
