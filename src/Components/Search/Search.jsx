@@ -1,30 +1,22 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "./Search.css";
 
-class Search extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: "",
-      filter: "all",
-    };
-  }
+const Search = (props) => {
 
-  handleKey = (e) => {
+  const [search, setSearch] = useState('');
+  const [filter, setMovieFilter] = useState('all');
+
+  const handleKey = (e) => {
     if (e.key === "Enter") {
-      this.props.searchMovie(this.state.search, this.state.filter);
+      props.searchMovie(search, filter);
     }
   };
 
-  setFilter = (e) => {
-    this.setState(() => ({
-      filter: e.target.value,
-    }), () => {
-        this.props.searchMovie(this.state.search, this.state.filter);
-    });
+  const setFilter = (e) => {
+    setMovieFilter(e.target.value);
+    props.searchMovie(search, e.target.value);
   };
 
-  render() {
     return (
       <React.Fragment>
         <nav>
@@ -33,21 +25,13 @@ class Search extends Component {
               <input
                 id="search"
                 type="search"
-                onChange={(e) =>
-                  this.setState({
-                    search: e.target.value,
-                  })
-                }
-                onKeyDown={this.handleKey}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={handleKey}
                 required
               />
               <label className="label-icon" htmlFor="search">
                 <i
-                  onClick={this.props.searchMovie.bind(
-                    this,
-                    this.state.search,
-                    this.state.filter
-                  )}
+                  onClick={() => props.searchMovie(search, filter)}
                   className="material-icons search-movie"
                 >
                   search
@@ -65,8 +49,8 @@ class Search extends Component {
                 name="filter"
                 type="radio"
                 value="all"
-                onChange={this.setFilter}
-                checked={this.state.filter === 'all'}
+                onChange={setFilter}
+                checked={filter === 'all'}
               />
               <span>All</span>
             </label>
@@ -78,8 +62,8 @@ class Search extends Component {
                 name="filter"
                 type="radio"
                 value="movie"
-                onChange={this.setFilter}
-                checked={this.state.filter === 'movie'}
+                onChange={setFilter}
+                checked={filter === 'movie'}
               />
               <span>Films</span>
             </label>
@@ -91,8 +75,8 @@ class Search extends Component {
                 name="filter"
                 type="radio"
                 value="series"
-                onChange={this.setFilter}
-                checked={this.state.filter === 'series'}
+                onChange={setFilter}
+                checked={filter === 'series'}
               />
               <span>TV Series</span>
             </label>
@@ -101,6 +85,5 @@ class Search extends Component {
       </React.Fragment>
     );
   }
-}
 
 export { Search };

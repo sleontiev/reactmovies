@@ -1,53 +1,58 @@
-import { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Movies } from "../../Components/Movies/Movies";
 import { Preloader } from "../../Components/Preloader/Preloader";
 import { Search } from "../../Components/Search/Search";
 import "./Main.css";
 
-class Main extends Component {
-  state = {
-    movies: [],
-    loading: true,
-  };
+const Main = () => {
 
-  componentDidMount() {
-    fetch(`http://www.omdbapi.com/?apikey=8d1cc66c&s=Avengers`)
-      .then((response) => response.json())
-      .then(post => this.setState({
-          movies: post.Search,
-          loading: false,
-      }))
-  }
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  changeBg = (id) => {
-    const fillArr = this.state.movies.filter((item) => item.imdbID === id);
+  // componentDidMount() {
+  //   fetch(`http://www.omdbapi.com/?apikey=8d1cc66c&s=Avengers`)
+  //     .then((response) => response.json())
+  //     .then(post => this.setState({
+  //         movies: post.Search,
+  //         loading: false,
+  //     }))
+  // }
+
+  const changeBg = (id) => {
+    const fillArr = movies.filter((item) => item.imdbID === id);
     document.body.style.backgroundImage = `url(${fillArr[0].Poster})`;
   };
 
-  searchMovie = (movieName, movieType) => {
-      this.setState({
-          loading: true,
-      })
+  const searchMovie = (movieName, movieType) => {
+    setLoading(true);
     fetch(
       `http://www.omdbapi.com/?apikey=8d1cc66c&s=${movieName}${
         movieType !== "all" ? `&type=${movieType}` : ""
       }`
     )
-      .then((response) => response.json())
-      .then(post => this.setState({
-        movies: post.Search,
-        loading: false,
-    }))
+      .then(response => response.json())
+      .then(post => {
+        setMovies(post.Search);
+        setLoading(false)
+      })
   };
 
-  render() {
+  useEffect(() => {
+    fetch(`http://www.omdbapi.com/?apikey=8d1cc66c&s=Avengers`)
+      .then(response => response.json())
+      .then(post => {
+        setMovies(post.Search);
+        setLoading(false)
+      })
+  }, [])
+
     return (
       <main className="mainContainer">
-        <Search searchMovie={this.searchMovie} />
-        {!this.state.loading ? (
+        <Search searchMovie={searchMovie} />
+        {!loading ? (
           <Movies
-            changeBg={this.changeBg}
-            movies={this.state.movies}
+            changeBg={changeBg}
+            movies={movies}
           />
         ) : (
           <Preloader />
@@ -55,6 +60,5 @@ class Main extends Component {
       </main>
     );
   }
-}
 
 export { Main };
